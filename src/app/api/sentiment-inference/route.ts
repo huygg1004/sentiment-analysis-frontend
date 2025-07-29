@@ -1,10 +1,9 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+// src/app/api/sentiment-inference/route.ts
+
 import {
   InvokeEndpointCommand,
-  SageMakerRuntime,
   SageMakerRuntimeClient,
 } from "@aws-sdk/client-sagemaker-runtime";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { NextResponse } from "next/server";
 import { env } from "~/env";
 import { checkAndUpdateQuota } from "~/lib/quota";
@@ -32,7 +31,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
     }
 
-    const { key } = await req.json();
+    const { key }: { key: string } = await req.json();
 
     if (!key) {
       return NextResponse.json({ error: "Key is required" }, { status: 400 });

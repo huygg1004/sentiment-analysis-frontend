@@ -1,3 +1,5 @@
+// src/app/api/upload-url/route.ts
+
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { NextResponse } from "next/server";
@@ -26,7 +28,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
     }
 
-    const { fileType } = await req.json();
+    const { fileType }: { fileType: string } = await req.json();
 
     if (!fileType || !fileType.match(/\.(mp4|mov|avi)$/i)) {
       return NextResponse.json(

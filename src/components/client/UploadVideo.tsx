@@ -1,8 +1,11 @@
+// src/components/client/UploadVideo.tsx
+
 "use client";
 
 import { useState } from "react";
 import { FiUpload } from "react-icons/fi";
 import type { Analysis } from "./Inference";
+
 interface UploadVideoProps {
   apiKey: string;
   onAnalysis: (analysis: Analysis) => void;
@@ -32,11 +35,12 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
       });
 
       if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error?.error || "Failed to get upload URL");
+        const error: { error: string } = await res.json();
+        throw new Error(error?.error ?? "Failed to get upload URL");
       }
 
-      const { url, fileId, key } = await res.json();
+      const { url, key }: { url: string; fileId: string; key: string } =
+        await res.json();
 
       // 2. Upload file to S3
       const uploadRes = await fetch(url, {
@@ -62,11 +66,11 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
       });
 
       if (!analysisRes.ok) {
-        const error = await analysisRes.json();
-        throw new Error(error?.error || "Failed to analyze video");
+        const error: { error: string } = await analysisRes.json();
+        throw new Error(error?.error ?? "Failed to analyze video");
       }
 
-      const analysis = await analysisRes.json();
+      const analysis: Analysis = await analysisRes.json();
 
       console.log("Analysis: ", analysis);
       onAnalysis(analysis);
@@ -74,7 +78,6 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
     } catch (error) {
       setError(error instanceof Error ? error.message : "Upload failed");
       console.error("Upload failed", error);
-      throw error;
     }
   };
 
@@ -87,7 +90,9 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
           className="hidden"
           onChange={(e) => {
             const file = e.target.files?.[0];
-            if (file) handleUpload(file);
+            if (file) {
+              void handleUpload(file);
+            }
           }}
           id="video-upload"
         />
@@ -100,8 +105,8 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
             {status === "uploading"
               ? "Uploading..."
               : status === "analyzing"
-                ? "Analysing..."
-                : "Upload a video"}
+              ? "Analysing..."
+              : "Upload a video"}
           </h3>
           <p className="text-center text-xs text-gray-500">
             Get started with sentiment detection by uploading a video.

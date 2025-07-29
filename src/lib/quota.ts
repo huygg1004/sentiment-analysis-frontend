@@ -1,8 +1,10 @@
+// src/lib/quota.ts
+
 import { db } from "~/server/db";
 
 export async function checkAndUpdateQuota(
   userId: string,
-  deductFromQuota: boolean = true,
+  deductFromQuota = true,
 ): Promise<boolean> {
   const quota = await db.apiQuota.findUniqueOrThrow({
     where: { userId },
