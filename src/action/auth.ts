@@ -1,3 +1,5 @@
+// src/action/auth.ts
+
 "use server";
 
 import { hash } from "bcryptjs";
@@ -41,7 +43,7 @@ export async function registerUser(data: SignupSchema) {
     });
 
     return { success: true };
-  } catch (error) {
+  } catch {
     return { error: "Something went wrong" };
   }
 }

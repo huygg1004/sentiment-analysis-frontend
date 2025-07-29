@@ -6,6 +6,11 @@ import { NextResponse } from "next/server";
 import { env } from "~/env";
 import { db } from "~/server/db";
 
+// Define a type for the request body
+type UploadUrlRequestBody = {
+  fileType: string;
+};
+
 export async function POST(req: Request) {
   try {
     // Get API key from the header
@@ -28,7 +33,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
     }
 
-    const { fileType }: { fileType: string } = await req.json();
+    const { fileType } = (await req.json()) as UploadUrlRequestBody;
 
     if (!fileType || !/\.(mp4|mov|avi)$/i.test(fileType)) {
       return NextResponse.json(

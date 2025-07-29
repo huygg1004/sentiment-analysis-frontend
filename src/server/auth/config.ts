@@ -68,7 +68,7 @@ export const authConfig = {
             email: user.email,
             name: user.name,
           };
-        } catch (error) {
+        } catch {
           return null;
         }
       },

@@ -11,6 +11,16 @@ interface UploadVideoProps {
   onAnalysis: (analysis: Analysis) => void;
 }
 
+// Define types for API responses
+type UploadUrlResponse = {
+  url: string;
+  key: string;
+};
+
+type ErrorResponse = {
+  error: string;
+};
+
 function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
   const [status, setStatus] = useState<"idle" | "uploading" | "analyzing">(
     "idle",
@@ -35,12 +45,11 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
       });
 
       if (!res.ok) {
-        const errorBody: { error: string } = await res.json();
+        const errorBody = (await res.json()) as ErrorResponse;
         throw new Error(errorBody.error ?? "Failed to get upload URL");
       }
 
-      const { url, key }: { url: string; key: string } = await res.json();
-
+      const { url, key } = (await res.json()) as UploadUrlResponse;
 
       // 2. Upload file to S3
       const uploadRes = await fetch(url, {
@@ -66,11 +75,11 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
       });
 
       if (!analysisRes.ok) {
-        const errorBody: { error: string } = await analysisRes.json();
+        const errorBody = (await analysisRes.json()) as ErrorResponse;
         throw new Error(errorBody.error ?? "Failed to analyze video");
       }
 
-      const analysis: Analysis = await analysisRes.json();
+      const analysis = (await analysisRes.json()) as Analysis;
 
       console.log("Analysis: ", analysis);
       onAnalysis(analysis);

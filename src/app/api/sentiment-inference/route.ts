@@ -9,6 +9,12 @@ import { env } from "~/env";
 import { checkAndUpdateQuota } from "~/lib/quota";
 import { db } from "~/server/db";
 
+// Define a type for the expected analysis result
+type AnalysisResult = {
+  // Define the structure of the analysis object here
+  [key: string]: any;
+};
+
 export async function POST(req: Request) {
   try {
     // Get API key from the header
@@ -31,7 +37,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
     }
 
-    const { key }: { key: string } = await req.json();
+    const { key }: { key: string } = (await req.json()) as { key: string };
 
     if (!key) {
       return NextResponse.json({ error: "Key is required" }, { status: 400 });
@@ -84,7 +90,9 @@ export async function POST(req: Request) {
     });
 
     const response = await sagemakerClient.send(command);
-    const analysis: unknown = JSON.parse(new TextDecoder().decode(response.Body));
+    const analysis: AnalysisResult = JSON.parse(
+      new TextDecoder().decode(response.Body),
+    ) as AnalysisResult;
 
     await db.videoFile.update({
       where: { key },

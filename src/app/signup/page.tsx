@@ -1,3 +1,5 @@
+// src/app/signup/page.tsx
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +49,7 @@ export default function SignupPage() {
       } else {
         setError("Failed to sign in");
       }
-    } catch (error) {
+    } catch {
       setError("Something went wrong");
     } finally {
       setLoading(false);

@@ -1,3 +1,5 @@
+// src/components/client/copy-button.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -11,7 +13,7 @@ function CopyButton({ text }: { text: string }) {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
+    } catch {
       console.error("Failed to copy text to clipboard");
     }
   };
