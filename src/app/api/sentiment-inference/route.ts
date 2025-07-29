@@ -10,10 +10,7 @@ import { checkAndUpdateQuota } from "~/lib/quota";
 import { db } from "~/server/db";
 
 // Define a type for the expected analysis result
-type AnalysisResult = {
-  // Define the structure of the analysis object here
-  [key: string]: any;
-};
+type AnalysisResult = Record<string, unknown>;
 
 export async function POST(req: Request) {
   try {
@@ -90,7 +87,7 @@ export async function POST(req: Request) {
     });
 
     const response = await sagemakerClient.send(command);
-    const analysis: AnalysisResult = JSON.parse(
+    const analysis = JSON.parse(
       new TextDecoder().decode(response.Body),
     ) as AnalysisResult;
 
