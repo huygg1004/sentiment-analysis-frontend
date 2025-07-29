@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
     const { fileType }: { fileType: string } = await req.json();
 
-    if (!fileType || !fileType.match(/\.(mp4|mov|avi)$/i)) {
+    if (!fileType || !/\.(mp4|mov|avi)$/i.test(fileType)) {
       return NextResponse.json(
         { error: "Invalid file type. Only .mp4, .mov, .avi are supported" },
         { status: 400 },

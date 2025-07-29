@@ -35,12 +35,12 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
       });
 
       if (!res.ok) {
-        const error: { error: string } = await res.json();
-        throw new Error(error?.error ?? "Failed to get upload URL");
+        const errorBody: { error: string } = await res.json();
+        throw new Error(errorBody.error ?? "Failed to get upload URL");
       }
 
-      const { url, key }: { url: string; fileId: string; key: string } =
-        await res.json();
+      const { url, key }: { url: string; key: string } = await res.json();
+
 
       // 2. Upload file to S3
       const uploadRes = await fetch(url, {
@@ -66,11 +66,11 @@ function UploadVideo({ apiKey, onAnalysis }: UploadVideoProps) {
       });
 
       if (!analysisRes.ok) {
-        const error: { error: string } = await analysisRes.json();
-        throw new Error(error?.error ?? "Failed to analyze video");
+        const errorBody: { error: string } = await analysisRes.json();
+        throw new Error(errorBody.error ?? "Failed to analyze video");
       }
 
-      const analysis: Analysis = await analysisRes.json();
+      const analysis = await analysisRes.json() as Analysis;
 
       console.log("Analysis: ", analysis);
       onAnalysis(analysis);
