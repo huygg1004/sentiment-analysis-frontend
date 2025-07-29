@@ -1,3 +1,4 @@
+// src/app/page.tsx
 "use server";
 
 import CodeExamples from "~/components/client/code-examples";
@@ -17,34 +18,42 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="flex h-16 items-center justify-between border-b border-gray-200 px-10">
+    <div className="min-h-screen bg-gradient-to-tr from-[#0f0c29] via-[#302b63] to-[#24243e] text-white flex flex-col">
+      {/* Navbar */}
+      <nav className="flex h-16 items-center justify-between px-10 border-b border-white/20">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gray-800 text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-black font-bold">
             SA
           </div>
-          <span className="text-lg font-medium">Sentiment Analysis</span>
+          <span className="text-lg font-semibold tracking-wide">
+            Sentiment AI
+          </span>
         </div>
-
         <SignOutButton />
       </nav>
 
-      <main className="flex min-h-screen w-full flex-col gap-6 p-4 sm:p-10 md:flex-row">
-        <Inference quota={{ secretKey: quota.secretKey }} />
-        <div className="hidden border-l border-slate-200 md:block"></div>
-        <div className="flex h-fit w-full flex-col gap-3 md:w-1/2">
-          <h2 className="text-lg font-medium text-slate-800">API</h2>
-          <div className="mt-3 flex h-fit w-full flex-col rounded-xl bg-gray-100 bg-opacity-70 p-4">
-            <span className="text-sm">Secret key</span>
-            <span className="text-sm text-gray-500">
-              This key should be used when calling our API, to authorize your
-              request. It can not be shared publicly, and needs to be kept
-              secret.
-            </span>
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <span className="text-sm">Key</span>
+      {/* Main content */}
+      <main className="flex flex-1 flex-col gap-6 p-4 sm:p-10 md:flex-row">
+        {/* Inference Component */}
+        <section className="w-full md:w-1/2 rounded-2xl bg-white/10 backdrop-blur p-6 border border-white/20 shadow-md">
+          <Inference quota={{ secretKey: quota.secretKey }} />
+        </section>
+
+        {/* Divider for desktop */}
+        <div className="hidden md:block w-px bg-white/20" />
+
+        {/* API Info */}
+        <section className="flex w-full flex-col gap-6 md:w-1/2">
+          <div className="rounded-2xl bg-white/10 backdrop-blur p-6 border border-white/20 shadow-md">
+            <h2 className="text-lg font-semibold mb-2">API Access</h2>
+            <p className="text-sm text-gray-300">
+              Use your secret key to call our API. Keep it private.
+            </p>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2 justify-between">
+              <span className="text-sm font-medium">Key</span>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="w-full max-w-[200px] overflow-x-auto rounded-md border border-gray-200 px-3 py-1 text-sm text-gray-600 sm:w-auto">
+                <span className="w-full max-w-[200px] overflow-x-auto rounded-md border border-white/20 bg-white/5 px-3 py-1 text-sm text-white sm:w-auto">
                   {quota.secretKey}
                 </span>
                 <CopyButton text={quota.secretKey} />
@@ -52,25 +61,34 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-3 flex h-fit w-full flex-col rounded-xl bg-gray-100 bg-opacity-70 p-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <span className="text-sm">Monthly quota</span>
-              <span className="text-sm text-gray-500">
+          <div className="rounded-2xl bg-white/10 backdrop-blur p-6 border border-white/20 shadow-md">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium">Monthly quota</span>
+              <span className="text-sm text-gray-300">
                 {quota.requestsUsed} / {quota.maxRequests} requests
               </span>
             </div>
-            <div className="mt-1 h-1 w-full rounded-full bg-gray-200">
+            <div className="w-full h-2 rounded-full bg-white/20">
               <div
                 style={{
-                  width: (quota.requestsUsed / quota.maxRequests) * 100 + "%",
+                  width:
+                    (quota.requestsUsed / quota.maxRequests) * 100 + "%",
                 }}
-                className="h-1 rounded-full bg-gray-800"
-              ></div>
+                className="h-2 rounded-full bg-white"
+              />
             </div>
           </div>
-          <CodeExamples />
-        </div>
+
+          <div className="rounded-2xl bg-white/10 backdrop-blur p-6 border border-white/20 shadow-md">
+            <CodeExamples />
+          </div>
+        </section>
       </main>
+
+      {/* Footer */}
+      <footer className="text-center text-sm text-gray-300 py-4 border-t border-white/20">
+        © {new Date().getFullYear()} Huy Doan. All rights reserved.
+      </footer>
     </div>
   );
 }

@@ -26,7 +26,6 @@ export default function LoginPage() {
   async function onSubmit(data: LoginSchema) {
     try {
       setLoading(true);
-
       const signInResult = await signIn("credentials", {
         redirect: false,
         email: data.email,
@@ -39,7 +38,7 @@ export default function LoginPage() {
         setError(
           signInResult.error === "CredentialsSignin"
             ? "Invalid email or password"
-            : "Something went wrong",
+            : "Something went wrong"
         );
       }
     } catch {
@@ -50,22 +49,24 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="flex h-16 items-center justify-between border-b border-gray-200 px-10">
+    <div className="min-h-screen bg-gradient-to-tr from-[#0f0c29] via-[#302b63] to-[#24243e] flex flex-col">
+      <nav className="flex h-16 items-center justify-between px-10 text-white">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gray-800 text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-black font-bold">
             SA
           </div>
-          <span className="text-lg font-medium">Sentiment Analysis</span>
+          <span className="text-lg font-semibold tracking-wide">
+            Sentiment AI
+          </span>
         </div>
       </nav>
 
-      <main className="flex h-[calc(100vh-4rem)] items-center justify-center">
-        <div className="w-full max-w-md space-y-8 px-4">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold">Welcome back</h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Please sign in to your account
+      <main className="flex flex-1 items-center justify-center">
+        <div className="w-full max-w-md rounded-2xl bg-white/10 p-8 backdrop-blur-md shadow-lg border border-white/20">
+          <div className="text-center text-white">
+            <h2 className="text-3xl font-bold">Welcome Back</h2>
+            <p className="mt-2 text-sm text-gray-300">
+              Sign in to your Sentiment AI account
             </p>
           </div>
 
@@ -74,41 +75,41 @@ export default function LoginPage() {
             onSubmit={form.handleSubmit(onSubmit)}
           >
             {error && (
-              <div className="rounded-md bg-red-50 p-4 text-sm text-red-500">
+              <div className="rounded-md bg-red-500/10 p-4 text-sm text-red-400">
                 {error}
               </div>
             )}
 
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-white">
                   Email address
                 </label>
                 <input
                   {...form.register("email")}
                   type="email"
                   placeholder="you@example.com"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-gray-400 backdrop-blur focus:border-white focus:ring-2 focus:ring-white focus:outline-none"
                 />
                 {form.formState.errors.email && (
-                  <p className="mt-1 text-sm text-red-500">
+                  <p className="mt-1 text-sm text-red-400">
                     {form.formState.errors.email.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label className="text-sm font-medium text-white">
                   Password
                 </label>
                 <input
                   {...form.register("password")}
                   type="password"
                   placeholder="********"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-gray-400 backdrop-blur focus:border-white focus:ring-2 focus:ring-white focus:outline-none"
                 />
                 {form.formState.errors.password && (
-                  <p className="mt-1 text-sm text-red-500">
+                  <p className="mt-1 text-sm text-red-400">
                     {form.formState.errors.password.message}
                   </p>
                 )}
@@ -118,16 +119,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full justify-center rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50"
+              className="w-full rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50"
             >
               {loading ? "Logging in..." : "Log in"}
             </button>
 
-            <p className="text-center text-sm text-gray-600">
-              Don&apos;t have an account?{" "}
+            <p className="text-center text-sm text-gray-300">
+              Don’t have an account?{" "}
               <Link
-                className="font-medium text-gray-800 hover:text-gray-700"
                 href="/signup"
+                className="font-semibold text-white hover:underline"
               >
                 Sign up
               </Link>

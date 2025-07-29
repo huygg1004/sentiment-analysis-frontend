@@ -79,8 +79,8 @@ curl -X POST \\
 
   return (
     <div className="mt-3 flex h-fit w-full flex-col rounded-xl bg-gray-100 bg-opacity-70 p-4">
-      <span className="text-sm">API Usage</span>
-      <span className="mb-4 text-sm text-gray-500">
+      <span className="text-xl text-black">API Usage</span>
+      <span className="mb-4 text-base text-black">
         Examples of how to use the API with TypeScript and cURL.
       </span>
 
@@ -88,13 +88,13 @@ curl -X POST \\
         <div className="flex border-b border-gray-700">
           <button
             onClick={() => setActiveTab("ts")}
-            className={`px-4 py-2 text-xs ${activeTab === "ts" ? "bg-gray-800 text-white" : "text-gray-400 hover:text-gray-300"}`}
+            className={`px-4 py-2 text-xs ${activeTab === "ts" ? "bg-gray-400 text-white" : "text-white hover:text-white"}`}
           >
             TypeScript
           </button>
           <button
             onClick={() => setActiveTab("curl")}
-            className={`px-4 py-2 text-xs ${activeTab === "curl" ? "bg-gray-800 text-white" : "text-gray-400 hover:text-gray-300"}`}
+            className={`px-4 py-2 text-xs ${activeTab === "curl" ? "bg-gray-400 text-white" : "text-white hover:text-white"}`}
           >
             cURL
           </button>

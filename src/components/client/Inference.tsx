@@ -90,10 +90,10 @@ export function Inference({ quota }: InferenceProps) {
 
   return (
     <div className="flex h-fit w-full flex-col gap-3 md:w-1/2">
-      <h2 className="text-ls font-medium text-slate-800">Inference</h2>
+      <h2 className="text-ls font-bold text-white">Inference</h2>
       <UploadVideo onAnalysis={setAnalysis} apiKey={quota.secretKey} />
 
-      <h2 className="mt-2 text-sm text-slate-800">Overall analysis</h2>
+      <h2 className="mt-2 text-ls font-bold text-white">Overall analysis</h2>
       {averages?.topEmotion && averages.topSentiment ? (
         <div className="flex h-fit w-full flex-wrap items-center justify-center gap-4 rounded-xl border border-gray-200 p-4 sm:gap-8 sm:px-6">
           <div className="flex flex-col items-center">
@@ -101,7 +101,7 @@ export function Inference({ quota }: InferenceProps) {
             <span className="text-[40px]">
               {EMOTION_EMOJI[averages.topEmotion.label]}
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-white-500">
               {averages.topEmotion.confidence.toFixed(3)} (
               {(averages.topEmotion.confidence * 100).toFixed(0)}%)
             </span>
@@ -111,7 +111,7 @@ export function Inference({ quota }: InferenceProps) {
             <span className="text-[40px]">
               {SENTIMENT_EMOJI[averages.topSentiment.label]}
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-white-500">
               {averages.topSentiment.confidence.toFixed(3)} (
               {(averages.topSentiment.confidence * 100).toFixed(0)}%)
             </span>
@@ -119,13 +119,13 @@ export function Inference({ quota }: InferenceProps) {
         </div>
       ) : (
         <div className="flex h-32 w-full items-center justify-center rounded-xl border border-dashed border-gray-200 p-4">
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-white-400">
             Upload a video to see overall analysis
           </span>
         </div>
       )}
 
-      <h2 className="mt-2 text-sm text-slate-800">Analysis of utterances</h2>
+      <h2 className="mt-2 text-ls font-bold text-white">Analysis of utterances</h2>
       {analysis ? (
         <div className="flex flex-col gap-2">
           {analysis?.analysis.utterances.map((utterance) => {
@@ -143,7 +143,7 @@ export function Inference({ quota }: InferenceProps) {
                     {Number(utterance.start_time).toFixed(1)} -{" "}
                     {Number(utterance.end_time).toFixed(1)}
                   </div>
-                  <div className="mt-1 text-xs text-gray-500">
+                  <div className="mt-1 text-xs text-white-500">
                     {utterance.text}
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export function Inference({ quota }: InferenceProps) {
                   {utterance.emotions.map((emo) => {
                     return (
                       <div key={emo.label} className="flex items-center gap-2">
-                        <span className="w-16 whitespace-nowrap text-xs text-gray-500">
+                        <span className="w-16 whitespace-nowrap text-xs text-white-500">
                           {EMOTION_EMOJI[emo.label]} {emo.label}
                         </span>
                         <div className="flex-1">
@@ -208,7 +208,7 @@ export function Inference({ quota }: InferenceProps) {
         </div>
       ) : (
         <div className="flex h-32 w-full items-center justify-center rounded-xl border border-dashed border-gray-200 p-4">
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-white">
             Upload a video to see analysis results
           </span>
         </div>
