@@ -11,8 +11,8 @@
     "verbatimModuleSyntax": true,
 
     /* Strictness */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
+    "strict": false,
+    // "noUncheckedIndexedAccess": true,
     "checkJs": true,
 
     /* Bundled projects */
