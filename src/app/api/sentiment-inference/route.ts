@@ -84,7 +84,7 @@ export async function POST(req: Request) {
     });
 
     const response = await sagemakerClient.send(command);
-    const analysis = JSON.parse(new TextDecoder().decode(response.Body));
+    const analysis: unknown = JSON.parse(new TextDecoder().decode(response.Body));
 
     await db.videoFile.update({
       where: { key },
